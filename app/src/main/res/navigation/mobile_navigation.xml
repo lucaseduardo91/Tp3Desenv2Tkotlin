@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.infnetkot.tp3desenv2tkotlin.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_tarefas"
+        android:name="com.infnetkot.tp3desenv2tkotlin.ui.listatarefas.ListaTarefasFragment"
+        android:label="@string/menu_lista_tarefas"
+        tools:layout="@layout/fragment_lista_tarefas" />
+    <fragment
+        android:id="@+id/nav_cadastro_tarefa"
+        android:name="com.infnetkot.tp3desenv2tkotlin.ui.cadastro.CadastroTarefaFragment"
+        android:label="@string/menu_cadastrar_tarefa"
+        tools:layout="@layout/fragment_cadastro_tarefa" />
+</navigation>
