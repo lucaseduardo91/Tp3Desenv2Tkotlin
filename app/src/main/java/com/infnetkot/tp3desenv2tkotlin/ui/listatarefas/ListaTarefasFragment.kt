@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.firestore.QuerySnapshot
@@ -15,9 +16,12 @@ import com.infnetkot.tp3desenv2tkotlin.adapter.TarefaAdapter
 import com.infnetkot.tp3desenv2tkotlin.dao.TarefaDao
 import com.infnetkot.tp3desenv2tkotlin.dialog.LoadingAlerta
 import com.infnetkot.tp3desenv2tkotlin.model.Tarefa
+import com.infnetkot.tp3desenv2tkotlin.util.TarefaStorage
 import kotlinx.android.synthetic.main.fragment_lista_tarefas.*
 
 class ListaTarefasFragment : Fragment() {
+
+    private lateinit var tarefaStorage: TarefaStorage
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +32,10 @@ class ListaTarefasFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().let { act->
+            tarefaStorage = ViewModelProviders.of(act)
+                .get(TarefaStorage::class.java) }
 
         var dialogo = LoadingAlerta(requireActivity())
 
@@ -52,7 +60,7 @@ class ListaTarefasFragment : Fragment() {
             if (status) {
                 if (querySnapshot != null && !querySnapshot?.isEmpty) {
                     dialogo.dismiss()
-                    listagem_tarefas.adapter = TarefaAdapter(querySnapshot.toObjects(Tarefa::class.java),requireActivity())
+                    listagem_tarefas.adapter = TarefaAdapter(querySnapshot.toObjects(Tarefa::class.java),requireActivity(),tarefaStorage)
                     listagem_tarefas.layoutManager = LinearLayoutManager(this.context)
                 }
                 else{

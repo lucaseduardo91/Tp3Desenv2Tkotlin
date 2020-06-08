@@ -21,4 +21,9 @@
         android:name="com.infnetkot.tp3desenv2tkotlin.ui.cadastro.CadastroTarefaFragment"
         android:label="@string/menu_cadastrar_tarefa"
         tools:layout="@layout/fragment_cadastro_tarefa" />
+    <fragment
+        android:id="@+id/nav_editar_tarefa"
+        android:name="com.infnetkot.tp3desenv2tkotlin.ui.editartarefa.EditarTarefaFragment"
+        android:label="@string/menu_editar_tarefa"
+        tools:layout="@layout/fragment_editar_tarefa" />
 </navigation>

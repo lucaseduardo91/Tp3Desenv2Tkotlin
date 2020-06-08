@@ -29,4 +29,10 @@ class TarefaDao {
             .delete()
         return task
     }
+
+    fun update(id : String, descricao : String) : Task<Void>{
+        var task = db.collection(coll_name).document(id)
+            .update("descricao", descricao)
+        return task
+    }
 }

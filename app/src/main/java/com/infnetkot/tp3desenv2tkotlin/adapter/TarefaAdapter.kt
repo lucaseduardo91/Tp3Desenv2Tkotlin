@@ -1,7 +1,6 @@
 package com.infnetkot.tp3desenv2tkotlin.adapter
 
 import android.app.Activity
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infnetkot.tp3desenv2tkotlin.R
 import com.infnetkot.tp3desenv2tkotlin.dao.TarefaDao
 import com.infnetkot.tp3desenv2tkotlin.model.Tarefa
+import com.infnetkot.tp3desenv2tkotlin.util.TarefaStorage
 
-class TarefaAdapter (tarefas : MutableList<Tarefa>, activity: Activity) :
+class TarefaAdapter (tarefas : MutableList<Tarefa>, activity: Activity, tarefaStorage: TarefaStorage) :
     RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>(){
     var listaTarefas = tarefas
     var activity = activity
+    var tarefaStorage = tarefaStorage
 
     class TarefaViewHolder(itemView: View)
                             : RecyclerView.ViewHolder(itemView){
@@ -46,7 +47,8 @@ class TarefaAdapter (tarefas : MutableList<Tarefa>, activity: Activity) :
             excluirTarefa(listaTarefas,position, this, activity)
         }
         holder.editar.setOnClickListener {
-            // navigate to editar fragment
+            tarefaStorage.adicionaTarefa(listaTarefas[position])
+            activity.findNavController(R.id.nav_host_fragment).navigate(R.id.nav_editar_tarefa)
         }
     }
 

@@ -13,16 +13,20 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.infnetkot.tp3desenv2tkotlin.util.TarefaStorage
 
 class MenuActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var tarefaStorage: TarefaStorage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+
+        tarefaStorage = TarefaStorage()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -31,7 +35,7 @@ class MenuActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_tarefas, R.id.nav_cadastro_tarefa
+                R.id.nav_home, R.id.nav_tarefas, R.id.nav_cadastro_tarefa, R.id.nav_editar_tarefa
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

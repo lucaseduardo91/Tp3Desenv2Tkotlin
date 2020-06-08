@@ -13,4 +13,5 @@
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_lista_tarefas">Tarefas</string>
     <string name="menu_cadastrar_tarefa">Cadastrar Tarefa</string>
+    <string name="menu_editar_tarefa">Editar Tarefa</string>
 </resources>
