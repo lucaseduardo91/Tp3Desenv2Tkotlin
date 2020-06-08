@@ -3,6 +3,7 @@ package com.infnetkot.tp3desenv2tkotlin.dao
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 import com.infnetkot.tp3desenv2tkotlin.model.Tarefa
 
@@ -35,4 +36,12 @@ class TarefaDao {
             .update("descricao", descricao)
         return task
     }
+
+    fun setUpTarefaSnapshotListener(
+        listener:
+            (QuerySnapshot?,
+             FirebaseFirestoreException?) -> Unit
+    ) = db
+        .collection(coll_name)
+        .addSnapshotListener(listener)
 }

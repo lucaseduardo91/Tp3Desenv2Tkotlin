@@ -1,5 +1,6 @@
 package com.infnetkot.tp3desenv2tkotlin.ui.listatarefas
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.QuerySnapshot
 
 import com.infnetkot.tp3desenv2tkotlin.R
@@ -22,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_lista_tarefas.*
 class ListaTarefasFragment : Fragment() {
 
     private lateinit var tarefaStorage: TarefaStorage
+    private lateinit var listener: ListenerRegistration
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,8 +43,35 @@ class ListaTarefasFragment : Fragment() {
 
         var dialogo = LoadingAlerta(requireActivity())
 
+        listener = TarefaDao().setUpTarefaSnapshotListener{
+                qSnapshot, err ->
+            if (err != null){
+                Toast.makeText(activity,"Problema na sincronização da lista",Toast.LENGTH_SHORT)
+            } else {
+                var lista = qSnapshot!!.toObjects(Tarefa::class.java)
+                if(lista != null)
+                {
+                    var listagem = requireActivity().findViewById<RecyclerView>(R.id.listagem_tarefas)
+                    listagem.adapter = TarefaAdapter(lista,requireActivity(),tarefaStorage)
+                    listagem.layoutManager = LinearLayoutManager(this.context)
+                }
+                else
+                {
+                    dialogo.startLoadingDialog("Carregando tarefas...")
+                    setupRecyclerView(dialogo)
+                }
+
+            }
+        }
+
         dialogo.startLoadingDialog("Carregando tarefas...")
         setupRecyclerView(dialogo)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if(listener != null)
+            listener.remove()
     }
 
     fun carregarLista(report: (Boolean, String, QuerySnapshot?) -> Unit) {

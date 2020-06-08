@@ -50,6 +50,7 @@ class TarefaAdapter (tarefas : MutableList<Tarefa>, activity: Activity, tarefaSt
             tarefaStorage.adicionaTarefa(listaTarefas[position])
             activity.findNavController(R.id.nav_host_fragment).navigate(R.id.nav_editar_tarefa)
         }
+
     }
 
     fun excluirTarefa(tarefas : MutableList<Tarefa>,position : Int,adapter: TarefaAdapter, activity: Activity)
