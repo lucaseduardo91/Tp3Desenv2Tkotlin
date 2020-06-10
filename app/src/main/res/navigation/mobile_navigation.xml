@@ -26,4 +26,9 @@
         android:name="com.infnetkot.tp3desenv2tkotlin.ui.editartarefa.EditarTarefaFragment"
         android:label="@string/menu_editar_tarefa"
         tools:layout="@layout/fragment_editar_tarefa" />
+    <fragment
+        android:id="@+id/nav_info"
+        android:name="com.infnetkot.tp3desenv2tkotlin.ui.informacoes.InformacoesFragment"
+        android:label="@string/menu_informacoes"
+        tools:layout="@layout/fragment_informacoes" />
 </navigation>

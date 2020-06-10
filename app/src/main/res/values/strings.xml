@@ -14,4 +14,7 @@
     <string name="menu_lista_tarefas">Tarefas</string>
     <string name="menu_cadastrar_tarefa">Cadastrar Tarefa</string>
     <string name="menu_editar_tarefa">Editar Tarefa</string>
+    <string name="menu_informacoes">Informações</string>
+
+    <string name="texto_informacoes_fragment">Essa seção possui informações úteis para planejar suas tarefas. Atualmente  temos a informação da cotação do dólar, mas diferentes tipos de informação serão adicionados no futuro!</string>
 </resources>
