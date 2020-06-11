@@ -6,48 +6,33 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.infnetkot.tp3desenv2tkotlin.dialog.LoadingAlerta
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_cadastro_conta.*
 
-class MainActivity : AppCompatActivity() {
+class CadastroContaActivity : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth;
     private lateinit var loading : LoadingAlerta
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_cadastro_conta)
 
         auth = FirebaseAuth.getInstance()
 
-        btn_tela_cadastro.setOnClickListener {
-            var intent = Intent(this,CadastroContaActivity::class.java)
-            startActivity(intent)
-        }
+        btn_cadastrar_user.setOnClickListener {
+            var email = email_cadastrar.text.toString()
+            var senha = password_cadastrar.text.toString()
 
-        btn_logar.setOnClickListener {
-            var email = emailexistente.text.toString()
-            var senha = password_existente.text.toString()
-
-            if(!email.isNullOrBlank() && !senha.isNullOrBlank())
-            {
+            if (!email.isNullOrBlank() && !senha.isNullOrBlank()) {
                 loading = LoadingAlerta(this)
                 loading.startLoadingDialog("Carregando...")
-                logarUsuario(email,senha)
+                criarUsuario(email, senha)
             }
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        if(auth.currentUser != null)
-        {
-            var intent = Intent(this,MenuActivity::class.java)
-            startActivity(intent)
-        }
-    }
-
-    fun logarUsuario(email : String, password : String){
-        auth.signInWithEmailAndPassword(email, password)
+    fun criarUsuario(email : String, password : String){
+        auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     loading.dismiss()
@@ -56,6 +41,7 @@ class MainActivity : AppCompatActivity() {
                 } else {
                     loading.dismiss()
                     Toast.makeText(
+
                         this, "Authentication failed.",
                         Toast.LENGTH_SHORT
                     ).show()
@@ -63,4 +49,3 @@ class MainActivity : AppCompatActivity() {
             }
     }
 }
-
