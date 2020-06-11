@@ -17,4 +17,7 @@
     <string name="menu_informacoes">Informações</string>
 
     <string name="texto_informacoes_fragment">Essa seção possui informações úteis para planejar suas tarefas. Atualmente  temos a informação da cotação do dólar, mas diferentes tipos de informação serão adicionados no futuro!</string>
+
+    <string name="facebook_app_id">2967632779994489</string> <string name="fb_login_protocol_scheme">fb2967632779994489</string>
+
 </resources>

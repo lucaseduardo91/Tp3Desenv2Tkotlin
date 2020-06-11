@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import com.facebook.login.LoginManager
 import com.google.firebase.auth.FirebaseAuth
 import com.infnetkot.tp3desenv2tkotlin.MainActivity
 import com.infnetkot.tp3desenv2tkotlin.R
@@ -34,6 +35,7 @@ class HomeFragment : Fragment() {
             var auth = FirebaseAuth.getInstance()
 
             auth.signOut()
+            LoginManager.getInstance().logOut()
             var intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
         }
