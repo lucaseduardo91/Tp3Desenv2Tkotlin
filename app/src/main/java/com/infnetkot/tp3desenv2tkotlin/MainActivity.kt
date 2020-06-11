@@ -98,13 +98,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleFacebookAccessToken(token: AccessToken) {
 
+        var dialogoFacebook = LoadingAlerta(this)
+
+        dialogoFacebook.startLoadingDialog("Autenticando pelo facebook...")
+
         val credential = FacebookAuthProvider.getCredential(token.token)
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    dialogoFacebook.dismiss()
                     var intent = Intent(this,MenuActivity::class.java)
                     startActivity(intent)
                 } else {
+                    dialogoFacebook.dismiss()
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
                 }
