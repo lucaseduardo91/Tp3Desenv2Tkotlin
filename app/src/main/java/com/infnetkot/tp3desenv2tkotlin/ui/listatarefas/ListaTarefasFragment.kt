@@ -42,30 +42,30 @@ class ListaTarefasFragment : Fragment() {
                 .get(TarefaStorage::class.java) }
 
         var dialogo = LoadingAlerta(requireActivity())
+        dialogo.startLoadingDialog("Carregando tarefas...")
 
         listener = TarefaDao().setUpTarefaSnapshotListener{
                 qSnapshot, err ->
             if (err != null){
+                dialogo.dismiss()
                 Toast.makeText(activity,"Problema na sincronização da lista",Toast.LENGTH_SHORT)
             } else {
                 var lista = qSnapshot!!.toObjects(Tarefa::class.java)
                 if(lista != null)
                 {
+                    dialogo.dismiss()
                     var listagem = requireActivity().findViewById<RecyclerView>(R.id.listagem_tarefas)
                     listagem.adapter = TarefaAdapter(lista,requireActivity(),tarefaStorage)
                     listagem.layoutManager = LinearLayoutManager(this.context)
                 }
                 else
                 {
-                    dialogo.startLoadingDialog("Carregando tarefas...")
                     setupRecyclerView(dialogo)
                 }
 
             }
         }
 
-        dialogo.startLoadingDialog("Carregando tarefas...")
-        setupRecyclerView(dialogo)
     }
 
     override fun onStop() {
