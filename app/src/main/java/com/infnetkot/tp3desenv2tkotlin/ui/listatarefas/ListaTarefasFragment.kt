@@ -48,19 +48,22 @@ class ListaTarefasFragment : Fragment() {
                 qSnapshot, err ->
             if (err != null){
                 dialogo.dismiss()
-                Toast.makeText(activity,"Problema na sincronização da lista",Toast.LENGTH_SHORT)
+                Toast.makeText(activity,"Problema na sincronização da lista",Toast.LENGTH_SHORT).show()
             } else {
                 var lista = qSnapshot!!.toObjects(Tarefa::class.java)
-                if(lista != null)
+                if(!lista.isNullOrEmpty())
                 {
                     dialogo.dismiss()
                     var listagem = requireActivity().findViewById<RecyclerView>(R.id.listagem_tarefas)
+                    empty_view_tarefas.visibility = View.GONE
+                    listagem_tarefas.visibility = View.VISIBLE
                     listagem.adapter = TarefaAdapter(lista,requireActivity(),tarefaStorage)
                     listagem.layoutManager = LinearLayoutManager(this.context)
                 }
                 else
                 {
-                    setupRecyclerView(dialogo)
+                    listagem_tarefas.visibility = View.GONE
+                    empty_view_tarefas.visibility = View.VISIBLE
                 }
 
             }
@@ -74,36 +77,4 @@ class ListaTarefasFragment : Fragment() {
             listener.remove()
     }
 
-    fun carregarLista(report: (Boolean, String, QuerySnapshot?) -> Unit) {
-        TarefaDao().all()
-            .addOnFailureListener {
-                report(false, it.message.toString(), null)
-            }
-            .addOnSuccessListener {
-                report(true,
-                    "Consulta realizada com sucesso.", it)
-            }
-    }
-
-    fun setupRecyclerView(dialogo : LoadingAlerta) {
-
-        carregarLista { status, msg, querySnapshot ->
-            if (status) {
-                if (querySnapshot != null && !querySnapshot?.isEmpty) {
-                    dialogo.dismiss()
-                    listagem_tarefas.adapter = TarefaAdapter(querySnapshot.toObjects(Tarefa::class.java),requireActivity(),tarefaStorage)
-                    listagem_tarefas.layoutManager = LinearLayoutManager(this.context)
-                }
-                else{
-                        dialogo.dismiss()
-                        listagem_tarefas.visibility = View.GONE
-                        empty_view_tarefas.visibility = View.VISIBLE
-                    }
-            }
-            else {
-                dialogo.dismiss()
-                Toast.makeText(requireActivity(),"Falha na consulta de tarefas!",Toast.LENGTH_SHORT)
-            }
-        }
-    }
 }

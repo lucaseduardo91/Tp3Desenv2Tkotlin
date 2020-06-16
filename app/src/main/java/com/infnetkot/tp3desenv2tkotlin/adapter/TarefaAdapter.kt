@@ -57,8 +57,7 @@ class TarefaAdapter (tarefas : MutableList<Tarefa>, activity: Activity, tarefaSt
     {
         TarefaDao().delete(tarefas[position].id!!).addOnSuccessListener {
             tarefas.removeAt(position)
-            if(tarefas.size == 0)
-                activity.findNavController(R.id.nav_host_fragment).navigate(R.id.nav_home)
+
             adapter.notifyItemRemoved(position);
         }
             .addOnFailureListener {
