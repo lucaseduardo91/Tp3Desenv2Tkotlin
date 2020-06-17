@@ -62,6 +62,7 @@ class ListaTarefasFragment : Fragment() {
                 }
                 else
                 {
+                    dialogo.dismiss()
                     listagem_tarefas.visibility = View.GONE
                     empty_view_tarefas.visibility = View.VISIBLE
                 }
